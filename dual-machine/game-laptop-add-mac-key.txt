@@ -1,0 +1,24 @@
+你现在继续配置游戏本的 WSL Ubuntu。请把下面这把 Mac 主控公钥加入 WSL 用户 jiaxi 的 SSH authorized_keys。
+
+要求：
+- 只在 WSL Ubuntu 内操作。
+- 不要修改 Windows OpenSSH Server。
+- 不要改防火墙。
+- 不要删除已有 authorized_keys 内容。
+- 确保权限正确。
+
+执行命令：
+
+mkdir -p /home/jiaxi/.ssh
+chmod 700 /home/jiaxi/.ssh
+cat >> /home/jiaxi/.ssh/authorized_keys <<'EOF'
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMR6bt7uC+1q68ZOQuDtaZTww6SsRJiXwys65cSjHqYq jiaxi@macbook-air codex dual-machine 2026-06-28
+EOF
+chmod 600 /home/jiaxi/.ssh/authorized_keys
+chown -R jiaxi:jiaxi /home/jiaxi/.ssh
+
+然后报告：
+- tail -n 1 /home/jiaxi/.ssh/authorized_keys
+- ls -ld /home/jiaxi/.ssh
+- ls -l /home/jiaxi/.ssh/authorized_keys
+- systemctl status ssh --no-pager

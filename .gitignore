@@ -1,0 +1,14 @@
+.DS_Store
+*.log
+*.tmp
+
+# Keep local secrets out of the coordination repo.
+.env
+.env.*
+id_*
+*.pem
+
+# Python scratch files.
+__pycache__/
+.venv/
+

@@ -1,0 +1,17 @@
+Host legion-wsl
+  HostName PLACEHOLDER_TAILSCALE_OR_LAN_IP
+  User jiaxi
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519_codex_dual_machine
+  IdentitiesOnly yes
+  ServerAliveInterval 30
+  ServerAliveCountMax 4
+
+Host legion-win
+  HostName PLACEHOLDER_TAILSCALE_OR_LAN_IP
+  User 16119
+  Port 22
+  IdentityFile ~/.ssh/id_ed25519_codex_dual_machine
+  IdentitiesOnly yes
+  ServerAliveInterval 30
+  ServerAliveCountMax 4

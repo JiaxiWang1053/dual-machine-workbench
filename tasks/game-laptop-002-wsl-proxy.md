@@ -1,0 +1,112 @@
+# Task: Configure WSL Proxy Through Windows Clash
+
+请在游戏本 Codex 上执行本任务。
+
+目标：
+
+- 让 WSL Ubuntu 能通过 Windows 上的 Clash Verge/Mihomo 访问 GitHub、PyPI、PyTorch、Hugging Face 等。
+- 当前 Windows Clash/Mihomo 监听：`127.0.0.1:7897`。
+- WSL 直连 GitHub 超时。
+- WSL 访问 Windows host IP `:7897` 失败，因为 Clash 只监听 Windows localhost。
+
+推荐方案：
+
+- 优先使用 Windows 端口转发，只在 WSL NAT host IP 上监听一个端口，转发到 Windows 本机 `127.0.0.1:7897`。
+- 不优先使用 Clash `allow-lan`，因为 `allow-lan` 可能把代理暴露给局域网。
+
+边界：
+
+- 需要管理员 PowerShell。
+- 不改 Windows 防火墙，除非后续明确需要。
+- 不改 Clash 配置。
+- 不安装新软件。
+
+## 执行步骤
+
+在管理员 PowerShell 获取 WSL host IP：
+
+```powershell
+wsl -d Ubuntu-24.04 -- ip route
+```
+
+从输出中找到 `default via` 后面的 Windows host IP，例如 `172.28.112.1`。
+
+创建端口转发，假设 Windows host IP 是 `<WSL_HOST_IP>`：
+
+```powershell
+netsh interface portproxy add v4tov4 listenaddress=<WSL_HOST_IP> listenport=7898 connectaddress=127.0.0.1 connectport=7897
+```
+
+检查端口转发：
+
+```powershell
+netsh interface portproxy show v4tov4
+netstat -ano | findstr 7898
+```
+
+在 WSL 中测试：
+
+```bash
+export HTTP_PROXY=http://<WSL_HOST_IP>:7898
+export HTTPS_PROXY=http://<WSL_HOST_IP>:7898
+export ALL_PROXY=http://<WSL_HOST_IP>:7898
+curl -I --connect-timeout 10 -x http://<WSL_HOST_IP>:7898 https://github.com
+```
+
+如果测试成功，创建 WSL 代理脚本：
+
+```bash
+mkdir -p /home/jiaxi/bin
+cat > /home/jiaxi/bin/proxy <<'EOF'
+#!/usr/bin/env bash
+set -euo pipefail
+
+WSL_HOST_IP="$(ip route | awk '/default/ {print $3; exit}')"
+PROXY_URL="http://${WSL_HOST_IP}:7898"
+
+case "${1:-on}" in
+  on)
+    export HTTP_PROXY="${PROXY_URL}"
+    export HTTPS_PROXY="${PROXY_URL}"
+    export ALL_PROXY="${PROXY_URL}"
+    export http_proxy="${PROXY_URL}"
+    export https_proxy="${PROXY_URL}"
+    export all_proxy="${PROXY_URL}"
+    git config --global http.proxy "${PROXY_URL}"
+    git config --global https.proxy "${PROXY_URL}"
+    echo "Proxy enabled: ${PROXY_URL}"
+    ;;
+  off)
+    unset HTTP_PROXY HTTPS_PROXY ALL_PROXY http_proxy https_proxy all_proxy
+    git config --global --unset http.proxy 2>/dev/null || true
+    git config --global --unset https.proxy 2>/dev/null || true
+    echo "Proxy disabled"
+    ;;
+  show)
+    echo "${PROXY_URL}"
+    ;;
+  *)
+    echo "Usage: source ~/bin/proxy [on|off|show]" >&2
+    return 2 2>/dev/null || exit 2
+    ;;
+esac
+EOF
+chmod +x /home/jiaxi/bin/proxy
+chown jiaxi:jiaxi /home/jiaxi/bin/proxy
+```
+
+注意：
+
+- 因为 WSL host IP 可能在 `wsl --shutdown` 后变化，Windows 端口转发可能需要更新。
+- 如果测试失败，请报告 `netsh portproxy` 输出、`netstat` 输出、WSL `ip route` 输出和 `curl` 错误。
+
+## 结果提交
+
+把结果写入：
+
+```text
+reports/game-laptop-002-wsl-proxy.md
+```
+
+不要安装 Tailscale、PyTorch 或 Docker。
+

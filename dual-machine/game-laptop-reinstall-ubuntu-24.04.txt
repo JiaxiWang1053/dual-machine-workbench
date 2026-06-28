@@ -1,0 +1,86 @@
+你继续协助配置联想拯救者 R9000P 的 WSL2 工作环境。
+
+当前情况：
+- 已安装 Ubuntu 到 D:\WSL\Ubuntu
+- 但当前发行版是 Ubuntu 26.04 LTS，Python 是 3.14.4
+- 目标工作负载是 Python/PyTorch/CUDA 轻量训练
+
+决策：
+- 不保留 Ubuntu 26.04
+- 改为明确安装 Ubuntu 24.04 LTS
+- 原因：Ubuntu 26.04 和 Python 3.14 对 PyTorch/深度学习生态太超前，包兼容性风险高；Ubuntu 24.04 更适合作为工作环境底座。
+
+边界：
+- 不安装 Docker
+- 不安装 CUDA Toolkit
+- 不安装 PyTorch
+- 不安装 Tailscale
+- 不安装 Linux NVIDIA driver
+- 不改 Windows 防火墙
+- 不改 Windows 启动流程
+- 不删除 D:\WSL 以外的任何内容
+
+执行前必须先确认：
+1. 当前 Ubuntu 里没有用户需要保留的数据。
+2. 用户明确同意删除当前 WSL Ubuntu 发行版。
+3. PowerShell/Codex 当前是管理员权限。
+
+如果任一条件不满足，请停止并报告。
+
+建议步骤：
+
+1. 在 Windows PowerShell 中检查：
+   wsl --list --verbose
+   wsl --status
+   wsl --list --online
+
+2. 如果用户确认当前 Ubuntu 可删除，注销当前发行版：
+   wsl --terminate Ubuntu
+   wsl --unregister Ubuntu
+
+3. 清理旧安装目录：
+   只处理 D:\WSL\Ubuntu。
+   如果 D:\WSL\Ubuntu 仍存在，先列出内容并确认它确实是旧 WSL 安装目录，再删除。
+   不要删除 D:\WSL 本身的其他目录。
+
+4. 安装明确版本：
+   优先尝试：
+   wsl --install -d Ubuntu-24.04 --location D:\WSL\Ubuntu
+
+   如果 `--location` 或 `Ubuntu-24.04` 不可用，停止并报告完整错误，不要自行换方案。
+
+5. 启动 Ubuntu-24.04，创建用户：
+   用户名：jiaxi
+   密码：让用户自己输入，不要记录。
+
+6. 在 Ubuntu 内执行基础配置：
+   sudo apt update
+   sudo apt install -y build-essential curl wget git openssh-server ca-certificates gnupg lsb-release tmux htop python3 python3-venv python3-pip
+   如果 nvtop 可安装，再安装 nvtop；如果不可用，跳过并报告。
+
+7. 启用 systemd：
+   确保 /etc/wsl.conf 包含：
+   [boot]
+   systemd=true
+
+   然后在 Windows PowerShell 执行：
+   wsl --shutdown
+   再重新进入 Ubuntu-24.04。
+
+8. 启用 SSH：
+   sudo systemctl enable ssh
+   sudo systemctl start ssh
+
+9. 验证并报告：
+   wsl --list --verbose
+   cat /etc/os-release
+   python3 --version
+   git --version
+   systemctl is-system-running
+   systemctl status ssh --no-pager
+   nvidia-smi
+   ls -l /usr/lib/wsl/lib/libcuda.so*
+   hostname -I
+   ip route | awk '/default/ {print $3}'
+
+10. 不要继续进入代理、Tailscale、PyTorch 阶段。完成后报告结果。
