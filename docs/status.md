@@ -26,10 +26,11 @@
 
 - 游戏本 WSL 为完成 apt 安装临时固定 DNS：`1.1.1.1` 和 `8.8.8.8`。
 - Mac 还不能直接 SSH 到游戏本 WSL；需要添加 Mac 公钥并配置连接路径。
+- 游戏本 WLAN 当前为 `Public` profile，用户已同意将当前可信 WLAN 改为 `Private` 后创建 LAN SSH bridge。
 
 ## 下一步
 
-1. 游戏本执行 `tasks/game-laptop-004-ssh-lan-bridge.md`，添加 Mac 公钥并建立 LAN SSH bridge。
+1. 游戏本执行 `tasks/game-laptop-005-private-wlan-ssh-bridge.md`，将当前可信 WLAN 改为 `Private` 并建立 LAN SSH bridge。
 2. Mac 测试 `ssh` 到游戏本 WSL。
 3. 安装和配置 Tailscale。
 4. 建立 Python/PyTorch CUDA 环境。

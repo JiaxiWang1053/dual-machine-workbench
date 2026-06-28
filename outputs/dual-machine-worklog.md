@@ -51,6 +51,9 @@
 - WSL 访问 `172.28.112.1:7898` 已成功。
 - WSL 已能通过 Clash/Mihomo 代理访问 GitHub、Git 和 PyPI。
 - WSL 代理 helper 已创建：`/home/jiaxi/bin/proxy`。
+- Mac 公钥已加入 WSL 用户 `jiaxi` 的 `authorized_keys`。
+- LAN SSH bridge 第一次尝试停止，因为游戏本 WLAN profile 为 `Public`。
+- 用户已选择将当前可信 WLAN 改为 `Private` 后继续建立 LAN SSH bridge。
 
 ## Mac 侧待办
 
