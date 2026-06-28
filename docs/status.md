@@ -22,11 +22,13 @@
 
 - WSL 直连 GitHub 不稳定或超时。
 - Windows Clash/Mihomo 仅监听 `127.0.0.1:7897`，WSL 当前无法直接访问该端口。
+- Windows `portproxy` 已创建 `172.28.112.1:7898 -> 127.0.0.1:7897`，Windows 侧可用，但 WSL 访问 `172.28.112.1:7898` 超时。
+- 当前判断为 Windows/Hyper-V firewall 阻止 WSL NAT 到 Windows host 的 TCP `7898`。
 - 游戏本 WSL 为完成 apt 安装临时固定 DNS：`1.1.1.1` 和 `8.8.8.8`。
 
 ## 下一步
 
-1. 游戏本配置 WSL 使用 Windows Clash 代理，执行 `tasks/game-laptop-002-wsl-proxy.md`。
+1. 游戏本添加窄范围 Windows 防火墙规则，执行 `tasks/game-laptop-003-wsl-proxy-firewall.md`。
 2. 把 Mac 公钥加入 WSL `jiaxi` 用户。
 3. Mac 配置 `ssh legion-wsl`。
 4. 安装和配置 Tailscale。
