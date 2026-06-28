@@ -37,9 +37,15 @@
 - Git、OpenSSH Client、Windows Terminal、Anaconda 已安装。
 - OpenSSH Server、Tailscale、Docker Desktop、Mamba/Micromamba 未发现。
 - WSL2 已可用，当前安装在 `D:\WSL\Ubuntu`。
-- 当前 WSL 发行版为 Ubuntu 26.04 LTS，Python 3.14.4。
+- 已从 Ubuntu 26.04 重装为 Ubuntu 24.04.4 LTS。
+- WSL 发行版：`Ubuntu-24.04`，WSL 版本 `2`。
+- WSL 默认用户：`jiaxi`。
+- Python：`3.12.3`。
+- Git：`2.43.0`。
 - WSL 内 SSH、systemd、GPU、`libcuda.so` 已验证可用。
-- 因 PyTorch/深度学习生态兼容性，建议重装为明确的 Ubuntu 24.04 LTS 后再继续。
+- WSL IP：`172.28.122.115`。
+- WSL 视角 Windows host IP：`172.28.112.1`。
+- 为完成 apt 安装，WSL 内临时固定 DNS 为 `1.1.1.1` 和 `8.8.8.8`。
 
 ## Mac 侧待办
 
