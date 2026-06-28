@@ -13,6 +13,7 @@
 
 - 游戏本 WSL 当前为 Ubuntu 26.04 LTS，Python 3.14.4。
 - 建议重装为 Ubuntu 24.04 LTS 后再继续 PyTorch 环境。
+- GitHub 远端已添加，但 Mac SSH 公钥尚未加入 GitHub 账号，暂时不能 push。
 
 ## 下一步
 
@@ -22,4 +23,4 @@
 4. Mac 配置 `ssh legion-wsl`。
 5. 安装和配置 Tailscale。
 6. 建立 Python/PyTorch CUDA 环境。
-
+7. 把 Mac SSH 公钥加入 GitHub 后，推送本仓库到 GitHub。
