@@ -17,20 +17,20 @@
 - 游戏本 WSL 内基础工具已安装，包括 `build-essential`、`git`、`openssh-server`、`tmux`、`htop`、`nvtop`、`python3`、`python3-venv`、`python3-pip`。
 - 游戏本 WSL IP：`172.28.122.115`。
 - WSL 视角 Windows host IP：`172.28.112.1`。
+- 游戏本 Windows `portproxy` 已创建：`172.28.112.1:7898 -> 127.0.0.1:7897`。
+- 游戏本已添加窄范围 Windows 防火墙规则：只允许 WSL NAT 网段访问本机 TCP `7898`。
+- 游戏本 WSL 已能通过 Clash/Mihomo 代理访问 GitHub、Git 和 PyPI。
+- 游戏本 WSL 代理 helper 已创建：`/home/jiaxi/bin/proxy`。
 
 ## 当前阻塞
 
-- WSL 直连 GitHub 不稳定或超时。
-- Windows Clash/Mihomo 仅监听 `127.0.0.1:7897`，WSL 当前无法直接访问该端口。
-- Windows `portproxy` 已创建 `172.28.112.1:7898 -> 127.0.0.1:7897`，Windows 侧可用，但 WSL 访问 `172.28.112.1:7898` 超时。
-- 当前判断为 Windows/Hyper-V firewall 阻止 WSL NAT 到 Windows host 的 TCP `7898`。
 - 游戏本 WSL 为完成 apt 安装临时固定 DNS：`1.1.1.1` 和 `8.8.8.8`。
+- Mac 还不能直接 SSH 到游戏本 WSL；需要添加 Mac 公钥并配置连接路径。
 
 ## 下一步
 
-1. 游戏本添加窄范围 Windows 防火墙规则，执行 `tasks/game-laptop-003-wsl-proxy-firewall.md`。
-2. 把 Mac 公钥加入 WSL `jiaxi` 用户。
-3. Mac 配置 `ssh legion-wsl`。
-4. 安装和配置 Tailscale。
-5. 建立 Python/PyTorch CUDA 环境。
-6. 根据代理稳定性决定是否保留 WSL 固定 DNS。
+1. 把 Mac 公钥加入 WSL `jiaxi` 用户。
+2. Mac 配置 `ssh legion-wsl`。
+3. 安装和配置 Tailscale。
+4. 建立 Python/PyTorch CUDA 环境。
+5. 根据代理稳定性决定是否保留 WSL 固定 DNS。

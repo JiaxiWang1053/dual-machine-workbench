@@ -47,8 +47,10 @@
 - WSL 视角 Windows host IP：`172.28.112.1`。
 - 为完成 apt 安装，WSL 内临时固定 DNS 为 `1.1.1.1` 和 `8.8.8.8`。
 - 已尝试 Windows `portproxy`：`172.28.112.1:7898 -> 127.0.0.1:7897`。
-- Windows 侧访问 `7898` 成功，但 WSL 访问 `7898` 超时。
-- 下一步改为添加窄范围 Windows 防火墙允许规则，仅允许 WSL NAT 网段访问 TCP `7898`。
+- 已添加窄范围 Windows 防火墙允许规则，仅允许 WSL NAT 网段访问 TCP `7898`。
+- WSL 访问 `172.28.112.1:7898` 已成功。
+- WSL 已能通过 Clash/Mihomo 代理访问 GitHub、Git 和 PyPI。
+- WSL 代理 helper 已创建：`/home/jiaxi/bin/proxy`。
 
 ## Mac 侧待办
 
