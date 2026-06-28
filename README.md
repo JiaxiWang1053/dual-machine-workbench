@@ -45,3 +45,4 @@ origin -> GitHub private repo
 gitee  -> Gitee mirror
 ```
 
+远端配置步骤见 `docs/remote-setup.md`。
