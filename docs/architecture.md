@@ -28,6 +28,16 @@ Windows 游戏本
 - Windows 或 WSL 安装 Tailscale。
 - 使用 MagicDNS 或 Tailscale IP 写入 Mac `~/.ssh/config`。
 
+### LAN SSH Bridge
+
+WSL2 默认 NAT 网络不能直接被局域网访问。局域网 SSH 验证阶段使用 Windows `portproxy`：
+
+```text
+Mac -> Windows LAN IP:2222 -> WSL Ubuntu:22
+```
+
+该规则只绑定当前 Windows LAN IP，不监听 `0.0.0.0`。Windows 防火墙规则限制为 `Private` profile 和 `LocalSubnet`。
+
 ## 代理
 
 Mac 本机 Clash/Mihomo：`127.0.0.1:7897`。
@@ -47,4 +57,3 @@ WSL -> Windows host IP:7898 -> 127.0.0.1:7897
 - Mac：代码、文档、Git 仓库。
 - WSL：Linux 环境、数据缓存、训练输出。
 - 游戏本 D 盘可用空间有限，建议 WSL 初始使用控制在 160GB 以内。
-

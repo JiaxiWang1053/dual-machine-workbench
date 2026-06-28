@@ -29,8 +29,8 @@
 
 ## 下一步
 
-1. 把 Mac 公钥加入 WSL `jiaxi` 用户。
-2. Mac 配置 `ssh legion-wsl`。
+1. 游戏本执行 `tasks/game-laptop-004-ssh-lan-bridge.md`，添加 Mac 公钥并建立 LAN SSH bridge。
+2. Mac 测试 `ssh` 到游戏本 WSL。
 3. 安装和配置 Tailscale。
 4. 建立 Python/PyTorch CUDA 环境。
 5. 根据代理稳定性决定是否保留 WSL 固定 DNS。

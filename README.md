@@ -17,6 +17,7 @@
 - 推荐发行版：Ubuntu 24.04 LTS。
 - 不在 WSL 内安装 Linux NVIDIA driver。
 - 代理优先使用 Windows `netsh interface portproxy` 转发 Clash/Mihomo，而不是直接开启 Clash `allow-lan`。
+- 局域网 SSH 验证使用 Windows LAN IP 的 TCP `2222` 转发到 WSL SSH `22`，不监听 `0.0.0.0`。
 
 ## 两边 Codex 协作方式
 
